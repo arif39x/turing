@@ -8,13 +8,7 @@ version = "1.0.0"
 description = "Cryptographically pure One-Time Pad implementation with QRNG and HSM support"
 readme = "README.md"
 requires-python = ">=3.12"
-license = {text = "MIT"}
-authors = [
-    {name = "TURING Project"},
-]
-keywords = [
-    "cryptography",
-    "otp",
+license = {text = "Totally under QuantumRobot243"
     "one-time-pad",
     "quantum-rng",
     "hsm",
@@ -23,7 +17,6 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.12",
     "Topic :: Security :: Cryptography",
 ]
@@ -51,12 +44,6 @@ dev = [
 
 [project.scripts]
 turing = "turing.cli.main:app"
-
-[project.urls]
-Homepage = "https://github.com/turing-project/turing"
-Documentation = "https://turing.readthedocs.io"
-Repository = "https://github.com/turing-project/turing"
-Issues = "https://github.com/turing-project/turing/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["turing"]
