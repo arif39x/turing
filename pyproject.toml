@@ -1,0 +1,82 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "turing"
+version = "1.0.0"
+description = "Cryptographically pure One-Time Pad implementation with QRNG and HSM support"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "TURING Project"},
+]
+keywords = [
+    "cryptography",
+    "otp",
+    "one-time-pad",
+    "quantum-rng",
+    "hsm",
+    "post-quantum",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+]
+
+dependencies = [
+    "cryptography>=42.0.0",
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "requests>=2.31.0",
+    "qrcode[pil]>=7.4.2",
+    "aioquic>=1.0.0",
+]
+
+[project.optional-dependencies]
+hsm = [
+    "python-pkcs11>=0.7.0",
+    "yubihsm>=3.0.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "ruff>=0.2.0",
+]
+
+[project.scripts]
+turing = "turing.cli.main:app"
+
+[project.urls]
+Homepage = "https://github.com/turing-project/turing"
+Documentation = "https://turing.readthedocs.io"
+Repository = "https://github.com/turing-project/turing"
+Issues = "https://github.com/turing-project/turing/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["turing"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "S"]
+ignore = ["S101", "S311"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--cov=turing --cov-report=term-missing"
