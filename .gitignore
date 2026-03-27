@@ -1,40 +1,82 @@
-# Python bytecode
+# TURING Project Gitignore
+
+# ----------------------------------------------------------------------
+# 1. Cryptographic Secrets & Output Files
+# ----------------------------------------------------------------------
+# DANGER: Never commit keys, ciphertext, or vault data
+*.key
+*.bin
+*.hex
+*.pem
+*.pub
+*.priv
+.turing/
+vaults/
+
+# ----------------------------------------------------------------------
+# 2. Rust & Maturin Build Artifacts
+# ----------------------------------------------------------------------
+target/
+Cargo.lock
+
+# ----------------------------------------------------------------------
+# 3. Python Compiled & Cache Files
+# ----------------------------------------------------------------------
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*~
+*.so
 *.pyd
-
-# Virtual environments
-.venv/
-venv/
-env/
-ENV/
-
-# IDE - PyCharm
-.idea/
-
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Project-specific artifacts
-\#*
-Creates
-empty
-file
-
-# Distribution / packaging
+.Python
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-
-# Environment variables
+# ----------------------------------------------------------------------
+# 4. Virtual Environments
+# ----------------------------------------------------------------------
 .env
 .venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ----------------------------------------------------------------------
+# 5. Testing & Profiling
+# ----------------------------------------------------------------------
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+htmlcov/
+
+# ----------------------------------------------------------------------
+# 6. IDEs & OS Files
+# ----------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db

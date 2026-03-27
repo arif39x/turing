@@ -1,0 +1,14 @@
+[package]
+name = "turing_core"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+name = "turing_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.23", features = ["extension-module", "abi3-py312"] }
+zeroize = "1.7"
+subtle = "2.5"
+libc = "0.2"

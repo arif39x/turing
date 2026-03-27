@@ -1,6 +1,7 @@
 from turing.core.key import Key
 from turing.core.exceptions import KeyLengthError
-from turing.utils.constant_time import constant_time_xor
+from turing.turing_core import otp_encrypt as _rs_otp_encrypt
+from turing.turing_core import otp_decrypt as _rs_otp_decrypt
 
 
 def encrypt(plaintext: bytes, key: Key) -> bytes:
@@ -10,7 +11,7 @@ def encrypt(plaintext: bytes, key: Key) -> bytes:
         )
 
     key_bytes = key.raw()[:len(plaintext)]
-    return constant_time_xor(plaintext, key_bytes)
+    return bytes(_rs_otp_encrypt(plaintext, key_bytes))
 
 
 def decrypt(ciphertext: bytes, key: Key) -> bytes:
@@ -20,7 +21,7 @@ def decrypt(ciphertext: bytes, key: Key) -> bytes:
         )
 
     key_bytes = key.raw()[:len(ciphertext)]
-    return constant_time_xor(ciphertext, key_bytes)
+    return bytes(_rs_otp_decrypt(ciphertext, key_bytes))
 
 
 class OTP:
@@ -41,7 +42,7 @@ class OTP:
         key_bytes = self._key.raw()[self._offset:self._offset + len(plaintext)]
         self._offset += len(plaintext)
 
-        return constant_time_xor(plaintext, key_bytes)
+        return bytes(_rs_otp_encrypt(plaintext, key_bytes))
 
     def decrypt(self, ciphertext: bytes) -> bytes:
 
@@ -54,7 +55,7 @@ class OTP:
         key_bytes = self._key.raw()[self._offset:self._offset + len(ciphertext)]
         self._offset += len(ciphertext)
 
-        return constant_time_xor(ciphertext, key_bytes)
+        return bytes(_rs_otp_decrypt(ciphertext, key_bytes))
 
     @property
     def remaining(self) -> int:

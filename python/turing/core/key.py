@@ -1,34 +1,38 @@
-import ctypes
 import secrets
 from typing import Optional
 
 from turing.core.exceptions import KeyReuseError, KeyLengthError
-from turing.utils.burn import secure_zero
 
 
 class Key:
-    __slots__ = ("_data", "_burned", "_length", "_id")
+    __slots__ = ("_secret_key", "_burned", "_length", "_id")
 
     def __init__(self, data: bytes) -> None:
+        self._burned = False
+        self._id = secrets.token_hex(8)
+        self._secret_key = None
 
         if not data:
             raise KeyLengthError("Key data cannot be empty")
 
+        from turing.turing_core import SecretKey
+
         self._length = len(data)
-        self._data: Optional[bytearray] = bytearray(data)
-        self._burned = False
-        self._id = secrets.token_hex(8)
+        self._secret_key = SecretKey(data)
 
     def raw(self) -> bytes:
 
-        if self._burned or self._data is None:
+        if self._burned:
             raise KeyReuseError(f"Key {self._id} has been burned")
-        return bytes(self._data)
+        try:
+            return self._secret_key.raw_bytes()
+        except RuntimeError:
+            raise KeyReuseError(f"Key {self._id} has been burned")
 
     def burn(self) -> None:
-        if self._data is not None and not self._burned:
-            secure_zero(self._data)
-            self._data = None
+        if not self._burned:
+            if getattr(self, '_secret_key', None):
+                self._secret_key.burn()
             self._burned = True
 
     def __len__(self) -> int:

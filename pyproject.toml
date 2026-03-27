@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "turing"
@@ -8,7 +8,8 @@ version = "1.0.0"
 description = "Cryptographically pure One-Time Pad implementation with QRNG and HSM support"
 readme = "README.md"
 requires-python = ">=3.12"
-license = {text = "Totally under QuantumRobot243"
+license = {text = "Totally under QuantumRobot243"}
+keywords = [
     "one-time-pad",
     "quantum-rng",
     "hsm",
@@ -18,6 +19,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
     "Topic :: Security :: Cryptography",
 ]
 
@@ -45,8 +47,10 @@ dev = [
 [project.scripts]
 turing = "turing.cli.main:app"
 
-[tool.hatch.build.targets.wheel]
-packages = ["turing"]
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "python"
+module-name = "turing.turing_core"
 
 [tool.mypy]
 python_version = "3.12"
